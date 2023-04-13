@@ -1,0 +1,89 @@
+{
+	"data": {
+      "Holdings": [
+			{
+				*"Id": 5827,
+				"DivisionId": 39,
+				"DealId": 3233,
+				*"DealName": "1A Smart Start LLC - August 21, 2015 (Agency)",
+				*"IssuerId": 1798,
+				*"IndustryId": 302,
+				*"StatusId": 2,
+				"CustomDealId": "a7643348-386b-4a19-b737-b123defe8774",
+				"Access": 1,
+				*"AgentId": 118,
+				*"SourceId": 2,
+				"DataroomStatusId": 3,
+				"TypeId": 1,
+				*"Total": null,
+				"Created": "2018-01-18T19:45:35.070187",
+				*"LastPosted": "2019-12-05T07:41:00",
+				*"LastAccessed": "2020-01-30T05:38:56.364328",
+				"Borrowed": false,
+				"CurrentHolding": false,
+				*"AnalystIds": [
+					372,
+					373,
+					658,
+					924
+				],
+				*"DocCount": 19,
+				"DivisionIsPrivate": false,
+				"PrimaryCustomIdentifiers": null,
+				"SecondaryCustomIdentifiers": null,
+				*"CustomClientIssuersIdentifiers": null,
+				*"ClientCustomField": null,
+				*"CustomIdentifiers": null
+			}
+		],
+      "Agents": [
+          {
+            "Id": 1,
+            "CompanyName": "Bank of America Merrill Lynch"
+          }
+        ],
+      "Sources": [
+        {
+          "Id": 154,
+          "SourceName": "Box"
+        }
+        ],
+      "DealTypes": [
+        {
+          "Id": 1,
+          "TypeName": "Agency"
+        }
+        ],
+      "Analysts": [
+        {
+          "UserId": 374,
+          "FullName": "Tejs Broberg"
+        }],
+      "Assets": [
+        {
+          "Id": 703,
+          "AssetName": "Asset-Sale Term Loan",
+          "IssuerId": 205,
+          "HasEsmaData": false,
+          "DealIds": [
+            706
+          ],
+          "Divisions": [
+            {
+              "DivisionId": 39,
+              "AssetName": null
+            }
+          ],
+          "Identifiers": [
+            {
+              "Identifier": "07014QAJ0",
+              "TypeId": 1
+            },
+            {
+              "Identifier": "LX156197",
+              "TypeId": 3
+            }
+          ]
+        }]
+	}
+}
