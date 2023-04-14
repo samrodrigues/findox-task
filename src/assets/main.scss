@@ -1,0 +1,14 @@
+$breakpoint: 768px;
+
+body {
+  color: #222222;
+  background: #f5f5f7;
+  font-family: sans-serif;
+  font-size: 12px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @media (min-width: $breakpoint) {
+    font-size: 14px;
+  }
+}
