@@ -1,44 +1,38 @@
+<template>
+  <main>
+    <p class="title">Search Deals</p>
+    <AppGridControl v-model="searchValue" :columns="columns" />
+    <AppGrid
+        :data="deals"
+        :columns="columns"/>
+  </main>
+</template>
+
 <script setup>
-import {computed, reactive} from 'vue';
+import {computed} from 'vue';
 import {useDealsStore, useDocumentsStore} from '@/stores';
 import AppGrid from "../components/grid/AppGrid.vue";
+import AppGridControl from "../components/grid/AppGridControl.vue";
 
 const dealsStore = useDealsStore();
 const deals = computed(() => dealsStore.dealsWithRelatedData);
+const columns = computed(() => dealsStore.columns);
 
 const fetchDocumentsForDeal = (dealId) => {
   return documentsStore.getDocumentsByDealId(dealId);
 };
 
-const columns = reactive([
-  {key: 'Id', label: 'ID', isFilterable: false, isActive: true},
-  {key: 'issuer', label: 'Issuer', isFilterable: true, isActive: true},
-  {key: 'DealName', label: 'Deal', isFilterable: true, isActive: true},
-  //{ key: '', label: 'Bloomberg ID', isActive: true },
-  //{ key: '', label: 'ISIN', isActive: true },
-  {key: 'CustomDealId', label: 'Custom Deal Identifiers', isFilterable: false, isActive: true},
-  {
-    key: 'CustomClientIssuersIdentifiers',
-    label: 'Custom Issuer Identifiers',
-    isFilterable: false,
-    isActive: true,
-  },
-  {key: 'industry', label: 'Industry', isFilterable: true, isActive: true},
-  {key: 'agent', label: 'Agent', isFilterable: true, isActive: true},
-  {key: 'source', label: 'Source', isFilterable: true, isActive: true},
-  {key: 'StatusId', label: 'Status', isFilterable: true, isActive: true},
-  {key: 'Total', label: 'Total', isFilterable: false, isActive: true},
-  {key: 'lastPosted', label: 'Last Posted', isFilterable: false, isActive: true},
-  {key: 'lastAccessed', label: 'Last Accessed', isFilterable: false, isActive: true},
-  {key: 'analysts', label: 'Analysts', isFilterable: true, isActive: true},
-  {key: 'DocCount', label: 'Doc Count', isFilterable: true, isActive: true},
-  {key: 'ClientCustomField', label: 'Custom Field', isFilterable: false, isActive: true},
-]);
+import { ref } from 'vue';
+const searchValue = ref("");
 
 </script>
 
-<template>
-  <AppGrid
-      :data="deals"
-      :columns="columns"/>
-</template>
+<style>
+main {
+  margin: 24px;
+}
+.title {
+  margin-bottom: 0;
+  font-weight: bold;
+}
+</style>

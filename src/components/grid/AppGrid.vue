@@ -55,7 +55,6 @@
 import {computed, ref} from 'vue';
 import {sortLowerCase, pluralize} from "../../helpers/string";
 import AppGridColumnControls from "./AppGridColumnControls.vue";
-import AppGridPagination from "./AppGridPagination.vue";
 
 const props = defineProps({
   columns: Array,
@@ -124,16 +123,6 @@ const toggleHeader = (index) => {
   } else {
     openHeader.value = index
   }
-};
-
-
-// Pagination -- let's skip this for now
-import { usePagination } from "../../helpers/pagination";
-const currentPage = ref(1);
-const perPage = ref(25);
-const { paginatedData } = usePagination(sortedData, currentPage, perPage);
-const onPageUpdated = (page) => {
-  currentPage.value = page
 };
 
 </script>
