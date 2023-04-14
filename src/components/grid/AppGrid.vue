@@ -26,8 +26,11 @@
           />
         </div>
       </template>
+      <div class="row-info">
+        Showing <strong>{{ sortedData.length }} {{pluralize('row', sortedData.length)}}.</strong>
+      </div>
       <div
-          v-for="(row, rowIndex) in resultingData"
+          v-for="(row, rowIndex) in sortedData"
           :key="rowIndex"
           class="grid-row"
           role="row"
@@ -47,10 +50,12 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import {computed, ref} from 'vue';
-import {sortLowerCase} from "../../helpers/string";
+import {sortLowerCase, pluralize} from "../../helpers/string";
 import AppGridColumnControls from "./AppGridColumnControls.vue";
+import AppGridPagination from "./AppGridPagination.vue";
 
 const props = defineProps({
   columns: Array,
@@ -73,9 +78,8 @@ const sortColumn = ref(null);
 const sortDirection = ref(1);
 
 // Computed
-const resultingData = computed(() => {
-  // Filter the data according to appliedFilters
-  let filteredData = props.data.filter(row => {
+const filteredData = computed(() => {
+  return props.data.filter(row => {
     return Object.keys(appliedFilters.value).every(key => {
       const filterValues = appliedFilters.value[key];
       if (filterValues.length === 0) {
@@ -84,10 +88,11 @@ const resultingData = computed(() => {
       return filterValues.includes(row[key]);
     });
   });
+});
 
-  // Sort the data according to sortColumn and sortDirection
+const sortedData = computed(() => {
   if (sortColumn.value !== null) {
-    filteredData.sort((a, b) => {
+    return filteredData.sort((a, b) => {
       const valueA = a[sortColumn.value];
       const valueB = b[sortColumn.value];
       if (valueA < valueB) {
@@ -99,11 +104,8 @@ const resultingData = computed(() => {
       }
     });
   }
-
-  return filteredData;
+  return filteredData.value;
 });
-
-
 
 // Handlers
 const onClosed = () => {
@@ -122,6 +124,16 @@ const toggleHeader = (index) => {
   } else {
     openHeader.value = index
   }
+};
+
+
+// Pagination -- let's skip this for now
+import { usePagination } from "../../helpers/pagination";
+const currentPage = ref(1);
+const perPage = ref(25);
+const { paginatedData } = usePagination(sortedData, currentPage, perPage);
+const onPageUpdated = (page) => {
+  currentPage.value = page
 };
 
 </script>
@@ -160,20 +172,28 @@ $cellPadding: 8px;
   white-space: nowrap;
   overflow: visible;
   text-overflow: ellipsis;
+
+  &:not(:first-child) {
+    border-left: solid 1px #dedede;
+  }
+}
+
+.row-info {
+  grid-column: 1 / -1;
+  background-color: #f5f5f5;
+  padding: $cellPadding;
+  color: #333;
 }
 
 .grid-row {
   display: contents;
   cursor: pointer;
-
   .grid-cell {
     background-color: #ffffff;
   }
-
   &:nth-child(even) .grid-cell {
     background-color: #fcfcfc;
   }
-
   &:hover .grid-cell {
     background-color: #fcfcf2;
   }

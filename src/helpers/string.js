@@ -5,3 +5,7 @@ export const sortLowerCase = (a, b) => {
   if (lowerA > lowerB) return 1;
   return 0;
 }
+
+export const pluralize = (word, number, pluralSuffix = 's') => {
+  return word + (number > 1 ? pluralSuffix : '');
+}
