@@ -35,3 +35,9 @@ button.light {
   background: none;
   color: #679fbb;
 }
+
+button:disabled {
+  background-color: #dedede;
+  border-color: #dedede;
+  cursor: not-allowed;
+}
