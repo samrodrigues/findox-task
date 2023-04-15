@@ -4,7 +4,6 @@
       v-model="searchValue"
       :columns="columns"
       @export-requested="exportToXLSX"
-      @filters-reset="onFiltersReset"
   />
   <AppGridData
       :applied-filters="appliedFilters"
@@ -12,27 +11,23 @@
       :data="sortedData"
       :raw-data="data"
       :open-header="openHeader"
-      @filter-changed="onFilterChanged"
       @header-toggled="toggleHeader"
       @header-closed="openHeader = null"
-      @row-selected="onRowSelected"
+      @filter-changed="onFilterChanged"
       @sort-updated="onSortUpdated"
   />
 </template>
 
 <script setup>
-import {computed, ref, watch} from "vue";
-import { useRoute, useRouter } from 'vue-router';
-import { utils, writeFile } from 'xlsx';
 import AppGridData from "./AppGridData.vue";
 import AppGridControl from "./AppGridControl.vue";
+import {computed, ref} from "vue";
+import { utils, writeFile } from 'xlsx';
 
 const props = defineProps({
   data: Object,
   columns: Object,
 })
-
-const emits = defineEmits(['rowSelected'])
 
 // Initialize vars
 const appliedFilters = ref(
@@ -43,49 +38,9 @@ const openHeader = ref(null);
 const sortColumn = ref(null);
 const sortDirection = ref(1);
 
-const route = useRoute();
-const router = useRouter();
-const routeQuery = computed(() => route.query);
-
-watch(routeQuery, () => {
-  const filtersFromQuery = JSON.parse(routeQuery.value.filters || '{}');
-  for (const key in appliedFilters.value) {
-    if (filtersFromQuery[key]) {
-      appliedFilters.value[key] = filtersFromQuery[key];
-    } else {
-      appliedFilters.value[key] = [];
-    }
-  }
-}, { immediate: true });
-
-
 // Handlers
 const onFilterChanged = ({key, values}) => {
-  const column = props.columns.find(column => column.key === key);
-  if (values.length > 0 && column.isActive) {
-    appliedFilters.value[key] = values;
-  } else {
-    delete appliedFilters.value[key];
-  }
-
-  const filtersQuery = JSON.stringify(appliedFilters.value);
-  const updatedQuery = { ...route.query, filters: filtersQuery };
-
-  if (filtersQuery === '{}') {
-    delete updatedQuery.filters;
-  }
-
-  router.replace({ query: updatedQuery });
-}
-const onFiltersReset = () => {
-  for (const key in appliedFilters.value) {
-    appliedFilters.value[key] = [];
-  }
-  const filtersQuery = JSON.stringify(appliedFilters.value);
-  router.replace({ query: { ...route.query, filters: filtersQuery } });
-};
-const onRowSelected = (row) => {
-  emit('row-selected', row)
+  appliedFilters.value[key] = values;
 }
 const onSortUpdated = ({key, sortOrder}) => {
   sortColumn.value = key;
@@ -99,7 +54,6 @@ const toggleHeader = (index) => {
     openHeader.value = index
   }
 };
-
 
 const exportToXLSX = () => {
   const workbook = utils.book_new();
@@ -120,8 +74,7 @@ const exportToXLSX = () => {
   writeFile(workbook, 'grid_data.xlsx');
 };
 
-
-// Filtering and sorting data
+// Computed
 const filteredData = computed(() => {
   return props.data.filter(row => {
     return Object.keys(appliedFilters.value).every(key => {

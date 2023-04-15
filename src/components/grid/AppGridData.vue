@@ -35,7 +35,6 @@
           :key="rowIndex"
           class="grid-row"
           role="row"
-          @click="$emit('row-selected', row)"
       >
         <template v-for="(column, cellIndex) in columns">
           <div

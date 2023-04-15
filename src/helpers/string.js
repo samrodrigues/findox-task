@@ -1,9 +1,10 @@
 export const sortLowerCase = (a, b) => {
-  const stringA = typeof a === 'string' ? a : String(a);
-  const stringB = typeof b === 'string' ? b : String(b);
-
-  return stringA.localeCompare(stringB, undefined, { sensitivity: 'base' });
-};
+  const lowerA = typeof a === 'string' ? a.toLowerCase() : a;
+  const lowerB = typeof b === 'string' ? b.toLowerCase() : b;
+  if (lowerA < lowerB) return -1;
+  if (lowerA > lowerB) return 1;
+  return 0;
+}
 
 export const pluralize = (word, number, pluralSuffix = 's') => {
   return word + (number > 1 ? pluralSuffix : '');

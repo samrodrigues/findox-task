@@ -10,7 +10,6 @@
       Columns
       <AppGridColumnControls :columns="columns" :is-open="isOpen" @closed="isOpen = false"/>
     </button>
-    <button class="default" @click="$emit('filters-reset')">Reset filters</button>
     <button class="default" @click="$emit('export-requested')">Export</button>
   </div>
 </template>

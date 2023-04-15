@@ -11,7 +11,7 @@
 <script setup>
 import AppGrid from "../components/grid/AppGrid.vue";
 import {computed} from 'vue';
-import {useDocumentsStore} from '@/stores';
+import {useDealsStore, useDocumentsStore} from '@/stores';
 
 const documentsStore = useDocumentsStore();
 const documents = computed(() => documentsStore.documents);

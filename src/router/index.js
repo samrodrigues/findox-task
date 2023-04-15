@@ -1,24 +1,23 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Deals from '@/views/Deals.vue';
+import { createRouter, createWebHistory } from 'vue-router'
+import Deals from '@/views/Deals.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      redirect: '/deals',
-    },
-    {
       path: '/deals',
       name: 'deals',
-      component: Deals,
+      component: Deals
     },
     {
-      path: '/documents',
+      path: '/about',
       name: 'documents',
-      component: () => import('@/views/Documents.vue'),
-    },
-  ],
-});
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('@/views/Documents.vue')
+    }
+  ]
+})
 
-export default router;
+export default router
