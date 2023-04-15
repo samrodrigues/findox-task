@@ -1,0 +1,11 @@
+input[type=text] {
+  line-height: 1.5;
+  border: solid 1px #dedede;
+  height: 22px;
+  box-sizing: border-box;
+}
+
+
+input[type=text].small {
+  height: 22px;
+}
