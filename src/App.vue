@@ -6,7 +6,6 @@ import { RouterLink, RouterView } from 'vue-router'
   <header>
 
     <div class="wrapper">
-
       <nav>
         <RouterLink to="/deals">Deals</RouterLink>
         <RouterLink to="/documents">Documents</RouterLink>
@@ -18,4 +17,9 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style scoped>
+nav {
+  margin: 24px;
+  display: flex;
+  gap: 24px
+}
 </style>

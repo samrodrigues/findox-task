@@ -11,9 +11,10 @@
       :data="sortedData"
       :raw-data="data"
       :open-header="openHeader"
+      @filter-changed="onFilterChanged"
       @header-toggled="toggleHeader"
       @header-closed="openHeader = null"
-      @filter-changed="onFilterChanged"
+      @row-selected="onRowSelected"
       @sort-updated="onSortUpdated"
   />
 </template>
@@ -29,6 +30,8 @@ const props = defineProps({
   columns: Object,
 })
 
+const emit = defineEmits(['rowSelected'])
+
 // Initialize vars
 const appliedFilters = ref(
     props.columns.reduce((acc, column) => ({...acc, [column.key]: []}), {})
@@ -41,6 +44,9 @@ const sortDirection = ref(1);
 // Handlers
 const onFilterChanged = ({key, values}) => {
   appliedFilters.value[key] = values;
+}
+const onRowSelected = (row) => {
+  emit('rowSelected', row)
 }
 const onSortUpdated = ({key, sortOrder}) => {
   sortColumn.value = key;
@@ -74,7 +80,8 @@ const exportToXLSX = () => {
   writeFile(workbook, 'grid_data.xlsx');
 };
 
-// Computed
+
+// Filtering and sorting data
 const filteredData = computed(() => {
   return props.data.filter(row => {
     return Object.keys(appliedFilters.value).every(key => {

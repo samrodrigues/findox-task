@@ -1,6 +1,9 @@
 <template>
   <main>
-    <AppGrid :data="deals" :columns="columns">
+    <AppGrid
+        :data="deals"
+        :columns="columns"
+        @row-selected="onRowSelected">
       <template #title>
         <p class="title">Search Deals</p>
       </template>
@@ -17,8 +20,12 @@ const dealsStore = useDealsStore();
 const deals = computed(() => dealsStore.dealsWithRelatedData);
 const columns = computed(() => dealsStore.columns);
 
-const fetchDocumentsForDeal = (dealId) => {
-  return documentsStore.getDocumentsByDealId(dealId);
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const onRowSelected = (row) => {
+  router.push({ name: 'documents', query: { dealId: row.DealId } });
 };
 </script>
 

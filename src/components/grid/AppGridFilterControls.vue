@@ -56,7 +56,7 @@ const filteredValues = computed(() => {
   );
 });
 
-const selectedValues = ref([]);
+const selectedValues = ref([...props.appliedFilters]);
 
 const emitFilterChange = (value, checked) => {
   if (checked) {
@@ -128,8 +128,6 @@ hr {
   height: 1px;
   border: none;
 }
-
-
 
 .checkbox-list {
   display: flex;
