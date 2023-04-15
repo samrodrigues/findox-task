@@ -1,6 +1,9 @@
 <template>
   <main>
-    <AppGrid :data="deals" :columns="columns">
+    <AppGrid
+        :data="deals"
+        :columns="columns"
+        @row-selected="onRowSelected">
       <template #title>
         <p class="title">Search Deals</p>
       </template>
@@ -20,6 +23,10 @@ const columns = computed(() => dealsStore.columns);
 const fetchDocumentsForDeal = (dealId) => {
   return documentsStore.getDocumentsByDealId(dealId);
 };
+
+const onRowSelected = (row) => {
+
+}
 </script>
 
 <style>

@@ -18,7 +18,7 @@
 
     <footer>
       <button disabled class="secondary" @click="saveColumns">Save</button>
-      <button class="secondary" @click="closeDropdown">Cancel</button>
+      <button class="secondary" @click="closeDropdown">Close</button>
       <button class="secondary" @click="resetColumns">Reset</button>
     </footer>
   </div>
